@@ -41,6 +41,7 @@ export default {
 }
 .el-menu {
   padding-left: 3%;
+  box-shadow: 0 5px 6px -5px rgb(133 133 133 / 60%);
   /* background-color: aqua; */
 }
 .el-menu p {

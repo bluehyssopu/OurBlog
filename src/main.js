@@ -5,8 +5,19 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import mavonEditor from 'mavon-editor'
 import store from '@/store'
-
 import 'mavon-editor/dist/css/index.css'
+
+// 添加的vue渲染markdown
+import 'github-markdown-css/github-markdown.css'
+import hljs from 'highlight.js'
+
+Vue.directive('highlight', function (el) {
+  const blocks = el.querySelectorAll('pre code')
+  blocks.forEach(block => {
+    hljs.highlightBlock(block)
+  })
+})
+
 // use
 Vue.use(mavonEditor)
 Vue.config.productionTip = false

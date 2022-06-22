@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <nav>
-      <router-view></router-view>
-    </nav>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -18,6 +16,6 @@
   height: 100%;
   position: fixed;
   background-size: 100% 100%;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 </style>

@@ -6,7 +6,7 @@
     />
 
     <div class="message">
-      <p class="title">daskdajsd</p>
+      <p class="title">test</p>
       <p class="article">
         FOUC：Flash of Unstyled
         Content，无样式内容闪烁。CSS与图片可以并发加载，但js在加载时会禁用并发，阻止其他内容加载。原因：在CSS文件放在页面底部时，或先执行脚本文件
@@ -22,9 +22,7 @@
 export default {
   name: "BlogArticleItem",
   data() {
-    return {
-      
-    };
+    return {};
   },
 };
 </script>
@@ -33,7 +31,7 @@ export default {
 .container {
   border-radius: 8px;
   position: relative;
-  background-color: #FFF;
+  background-color: #fff;
   height: 15rem;
   margin-bottom: 2%;
 }
