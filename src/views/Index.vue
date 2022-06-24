@@ -1,6 +1,11 @@
 <template>
   <div class="container">
-    <el-menu :default-active="activeIndex" class="el-menu" mode="horizontal" router>
+    <el-menu style="box-shadow: 0 2px 5px rgb(0 0 0 / 30%)"
+      :default-active="activeIndex"
+      class="el-menu"
+      mode="horizontal"
+      router
+    >
       <el-menu-item index="home">首页</el-menu-item>
       <el-menu-item index="timeline">时间轴</el-menu-item>
       <el-menu-item index="classify">分类</el-menu-item>
@@ -10,9 +15,9 @@
         <el-menu-item index="myarticle">我的文章</el-menu-item>
       </el-submenu>
       <el-menu-item index="search">搜索</el-menu-item>
-      <el-menu-item index="timeline">关注</el-menu-item>
-      <p v-if="login === 0">登录/注册</p>
-      <p v-else>idddddddd</p>
+      <el-menu-item index="follow">关注</el-menu-item>
+      <el-button round v-if="login === 0" @click="jump">登录/注册</el-button>
+      <p v-else>{{ userId }}</p>
     </el-menu>
 
     <router-view></router-view>
@@ -25,9 +30,16 @@ export default {
 
   data() {
     return {
-      activeIndex: '1',
-      login: this.$store.state.logined
+      activeIndex: "1",
+      login: this.$store.state.logined,
+      userId: this.$store.state.userId,
     };
+  },
+
+  methods: {
+    jump() {
+      this.$router.push("/login");
+    },
   },
 };
 </script>
@@ -37,23 +49,27 @@ export default {
   overflow: auto;
   display: flex;
   flex-direction: column;
-
 }
 .el-menu {
   padding-left: 3%;
-  box-shadow: 0 5px 6px -5px rgb(133 133 133 / 60%);
   /* background-color: aqua; */
 }
 .el-menu p {
   position: absolute;
   top: 30%;
-  right: 10%;
-  font-size: inherit;
+  right: 5%;
+  font-size: 1.2em;
   font-weight: bold;
   color: #909399;
   /* background-color: aqua; */
 }
-
+.el-button {
+  position: absolute;
+  top: 15%;
+  right: 5%;
+  font-size: inherit;
+  /* background-color: aqua; */
+}
 
 .el-container:nth-child(5) .el-aside,
 .el-container:nth-child(6) .el-aside {

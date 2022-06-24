@@ -4,16 +4,11 @@
       src="https://res.cloudinary.com/chengchengcheng/image/upload/v1615820198/blog/%E9%A6%96%E9%A1%B5/v2-7e99c72876b50237b72ca4f8a393cf55_720w_yjmjfx.jpg"
       alt=""
     />
-
     <div class="message">
-      <p class="title">test</p>
-      <p class="article">
-        FOUC：Flash of Unstyled
-        Content，无样式内容闪烁。CSS与图片可以并发加载，但js在加载时会禁用并发，阻止其他内容加载。原因：在CSS文件放在页面底部时，或先执行脚本文件
-        白屏：浏览器长时间不渲染页面。原因：CSS样式被置于底部(最后加载)，js放在页面顶部导致白屏,阻碍DOM解析
-        浏览器性能问题：改变样式内容时，需要通过遍历整个DOM树，寻找需要修改的节点。dom树与js的模块是分开的，跨模块通讯成本增大；dom操作造成重绘与回流，使性能开销巨大。（用虚拟dom解决）hfkjdshjk
+      <p class="title">{{artdata.name}}</p>
+      <p class="article">{{artdata.content}}
       </p>
-      <el-button type="primary" plain>阅读全文</el-button>
+      <el-button type="primary" plain @click.stop="sendData">阅读全文</el-button>
     </div>
   </div>
 </template>
@@ -22,7 +17,16 @@
 export default {
   name: "BlogArticleItem",
   data() {
-    return {};
+    return {
+      
+    };
+  },
+  props:['artdata'],
+
+  methods:{
+    sendData(){
+      this.$router.push({path:'/article',query:{mdData:this.artdata.content}});
+    }
   },
 };
 </script>
@@ -31,9 +35,11 @@ export default {
 .container {
   border-radius: 8px;
   position: relative;
-  background-color: #fff;
+  background-color: #FFF;
   height: 15rem;
   margin-bottom: 2%;
+  /* 2. 新增样式 */
+  box-shadow: 0 3px 8px 6px rgba(7,17,27,0.05)
 }
 img {
   width: 40%;
@@ -45,6 +51,8 @@ img {
   left: 40%;
   width: 60%;
   height: 100%;
+  /* 1. 新增样式 */
+  overflow: hidden;
 }
 .title {
   display: inline-block;

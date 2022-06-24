@@ -6,22 +6,10 @@
       </el-aside>
       <el-main>
         <el-timeline>
-          <el-timeline-item timestamp="2018/4/12" placement="top" color="#FFF">
+          <el-timeline-item v-for="item in msgList" :key="item.id" :timestamp="item.createTime" placement="top" color="#FFF">
             <el-card>
-              <h4>更新 Github 模板</h4>
-              <p>王小虎 提交于 2018/4/12 20:46</p>
-            </el-card>
-          </el-timeline-item>
-          <el-timeline-item timestamp="2018/4/12" placement="top" color="#fff">
-            <el-card>
-              <h4>更新 Github 模板</h4>
-              <p>王小虎 提交于 2018/4/12 20:46</p>
-            </el-card>
-          </el-timeline-item>
-          <el-timeline-item timestamp="2018/4/12" placement="top" color="#fff">
-            <el-card>
-              <h4>更新 Github 模板</h4>
-              <p>王小虎 提交于 2018/4/12 20:46</p>
+              <h4>{{item.name}}</h4>
+              <p>更改于 {{item.updateTime}}</p>
             </el-card>
           </el-timeline-item>
         </el-timeline>
@@ -32,15 +20,25 @@
 
 <script>
 import AsideItem from "@/views/Aside.vue";
+import {timeLineApi} from "@/api"
 export default {
   name: "BlogTimeLine",
 
   data() {
-    return {};
+    return {
+      msgList:''
+    };
   },
   components: {
     AsideItem,
   },
+  async created(){
+    const res = await timeLineApi({userId:this.$store.state.userId});
+    console.log('------------------------');
+    console.log(res);
+    console.log('------------------------');
+    this.msgList = res.data.data
+  }
 };
 </script>
 
@@ -63,6 +61,8 @@ export default {
 }
 .el-timeline-item {
   color: #fff;
-
+}
+.el-card p{
+  padding-top: 1rem;
 }
 </style>

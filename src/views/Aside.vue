@@ -2,10 +2,10 @@
 <template>
   <div>
     <!-- 个人信息展示 -->
-    <div class="container">
+    <div class="container" style="box-shadow: 0 2px 5px rgb(0 0 0 / 30%)">
       <div class="show">
         <img src="../assets/logo.png" alt="author" />
-        <p>knock code and love life</p>
+        <p style="margin: 20px">{{onesay}}</p>
       </div>
 
       <div class="link">
@@ -15,7 +15,7 @@
       </div>
 
       <div class="sum">
-        <p style="font-weight: bold">60</p>
+        <p style="font-weight: bold">{{this.total}}</p>
         <p>文章</p>
       </div>
     </div>
@@ -28,14 +28,22 @@
 import NoticeItem from "@/components/Notice";
 export default {
   name: "BlogAside",
-  
   data() {
-    return {};
+    return {
+      onesay: ''
+    };
   },
 
   components: {
     NoticeItem,
   },
+
+  created(){
+    this.onesay = this.$store.state.onesay
+  },
+
+  props:['total']
+
 };
 </script>
 
@@ -47,7 +55,7 @@ export default {
 .container {
   margin-top: 0%;
   background-color: #fff;
-  border-radius: 5%;
+  border-radius: 8px;
 }
 .show {
   padding: 8% 5% 0% 5%;
@@ -58,6 +66,7 @@ export default {
   line-height: inherit;
   font-size: 0.8rem;
   font-weight: bold;
+  text-align: left;
 }
 .show img {
   width: 50%;

@@ -7,10 +7,20 @@
       </el-aside>
       <el-main>
         <el-tree
+          class="filter-tree"
           :data="data"
+          node-key="id"
           :props="defaultProps"
+          highlight-current
+          :filter-node-method="filterNode"
+          ref="tree"
           @node-click="handleNodeClick"
-        ></el-tree>
+        >
+          <span slot-scope="{ data }" class="span__">
+            <i class="el-icon-s-promotion"></i>
+            <span class="tree-node-span">{{ data.label }}</span>
+          </span>
+        </el-tree>
       </el-main>
     </el-container>
   </div>
@@ -97,7 +107,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .el-aside {
   margin-top: 3%;
   color: #333;
@@ -110,8 +120,22 @@ export default {
   margin-right: 5%;
   padding-top: 0%;
   padding-bottom: 0%;
-  /* background-color: #e9eef3; */
+  background-color: #fff;
   color: #333;
   text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px 6px rgba(7,17,27,0.05)
+}
+/deep/.el-icon-caret-right:before {
+  display: none;
+}
+/deep/.el-tree-node__content {
+  height: 36px;
+  border-radius: 8px;
+  padding-left: 36px;
+}
+/deep/.el-icon-s-promotion:before {
+  margin-right: 2em;
+  color: #49b1f5;
 }
 </style>

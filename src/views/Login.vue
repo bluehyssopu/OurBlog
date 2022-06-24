@@ -16,7 +16,7 @@
         <el-menu-item index="myarticle">我的文章</el-menu-item>
       </el-submenu>
       <el-menu-item index="search">搜索</el-menu-item>
-      <el-menu-item index="timeline">关注</el-menu-item>
+      <el-menu-item index="follow">关注</el-menu-item>
     </el-menu>
 
     <!-- 登录表单 -->
@@ -101,7 +101,7 @@
 import { LoginBlogApi } from "@/api";
 
 export default {
-  name: "BlogIndex",
+  name: "BlogLogin",
 
   data() {
     return {
@@ -127,6 +127,7 @@ export default {
       const res = await LoginBlogApi(JSON.stringify(this.loginForm));
       if (res.data.code == 1) {
         this.$store.commit("changelogin", 1);
+        this.$store.commit("changeUserId", this.loginForm.username);
         this.$router.push("/home");
         console.log(res)
       } else {

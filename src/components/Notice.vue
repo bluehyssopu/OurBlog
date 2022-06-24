@@ -1,15 +1,13 @@
 <template>
   <div>
-    <div class="container">
-      <div class="title">
-        <p style="font-weight: bold">公告</p>
-      </div>
-      <div class="notice">
-        <p>
-          帝国男子石油高中CS系的菜鸟🤡，记录自己的所学所感🤣欢迎小伙伴们交换友链啊😁
-        </p>
-      </div>
+     <div class="container" style="box-shadow: 0 2px 5px rgb(0 0 0 / 30%)">
+    <div class="title">
+      <p style="font-weight:bold">公告</p>
     </div>
+    <div class="notice">
+      <p>帝国男子石油高中CS系的菜鸟🤡，记录自己的所学所感🤣欢迎小伙伴们交换友链啊😁</p>
+    </div>
+     </div>
   </div>
 </template>
 
@@ -23,20 +21,21 @@ export default {
 };
 </script>
 
-<style scoped>
-* {
+<style  scoped>
+
+*{
   margin: 0;
   padding: 0;
 }
-.container {
+.container{
   margin-top: 10%;
-  background-color: #fff;
-  border-radius: 5%;
+  background-color: #FFF;
+  border-radius: 8px;
 }
-.title {
+.title{
   padding: 5% 5% 0% 5%;
 }
-.notice {
+.notice{
   padding: 5% 5%;
   font-size: 00.8rem;
   text-align: left;

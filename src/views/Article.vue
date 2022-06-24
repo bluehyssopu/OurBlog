@@ -5,7 +5,18 @@
         <aside-item></aside-item>
       </el-aside>
       <el-main style="height: 100%">
-        <article-detail></article-detail>    
+        <div class="container_edit" style="text-align: left; word-wrap: break-word">
+          <mavon-editor
+            class="md"
+            :value="mdData"
+            :subfield="false"
+            :defaultOpen="'preview'"
+            :toolbarsFlag="false"
+            :editable="false"
+            :scrollStyle="true"
+            :ishljs="true"
+          ></mavon-editor>
+        </div>
       </el-main>
     </el-container>
   </div>
@@ -13,20 +24,23 @@
 
 <script>
 import AsideItem from "@/views/Aside.vue";
-import ArticleDetail from '@/components/ArticleDetail.vue';
-import 'github-markdown-css/github-markdown.css'
-import 'highlight.js/styles/atom-one-dark.css'
 
 export default {
-  name: "BlogHome",
+  name: "BlogArticle",
 
   data() {
-    return {};
+    return {
+      mdData: '',
+    };
   },
   components: {
     AsideItem,
-    ArticleDetail
   },
+  async created(){
+    if(this.$route.query.mdData != null){
+      this.mdData = this.$route.query.mdData
+    }
+  }
 };
 </script>
 
@@ -54,5 +68,28 @@ export default {
   color: #333;
   text-align: center;
 }
+.container_edit {
+  border-radius: 8px;
+  position: relative;
+  /* background-color: #fff; */
+  height: auto;
+  min-height: 400px;
+  margin-bottom: 2%;
+}
+.markdown-body {
+  border-radius: 8px;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+  /* box-shadow: rgb(0 0 0 / 10%) 0px 2px 12px 0px; */
+}
 
+@media (max-width: 767px) {
+  .markdown-body {
+    padding: 15px;
+  }
+}
 </style>

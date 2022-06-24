@@ -2,11 +2,28 @@
   <div class="container">
     <el-container>
       <el-aside width="200px">
-        <aside-item></aside-item>
+        <aside-item :total="total"></aside-item>
       </el-aside>
-      <el-main>
-        <article-item></article-item>    
-      </el-main>
+
+      <el-container>
+        <el-main>
+          <article-item
+            v-for="item in listData"
+            :artdata="item"
+            :key="item.id"
+          ></article-item>
+        </el-main>
+        <el-footer
+          ><el-pagination
+            @current-change="handleCurrentChange"
+            :current-page="currentpage"
+            :page-size="pagesize"
+            layout="total, prev, pager, next, jumper"
+            :total="total"
+          >
+          </el-pagination
+        ></el-footer>
+      </el-container>
     </el-container>
   </div>
 </template>
@@ -14,15 +31,46 @@
 <script>
 import ArticleItem from "@/components/ArticleItem.vue";
 import AsideItem from "@/views/Aside.vue";
+import { requestArticleApi } from "@/api";
+
 export default {
-  name: "BlogHome",
+  name: "BlogMyarticle",
 
   data() {
-    return {};
+    return {
+      pagesize: 1,
+      currentpage: 1,
+      total: 5,
+      listData: [],
+    };
   },
+
   components: {
     ArticleItem,
-    AsideItem
+    AsideItem,
+  },
+
+  methods: {
+    async handleCurrentChange(val) {
+      this.currentpage = val;
+      const res = await requestArticleApi({
+        page: this.currentpage,
+        pagesize: this.pagesize,
+        userId: this.$store.state.userId,
+      });
+      // console.log(res);
+      (this.total = res.data.data.total),
+        (this.listData = res.data.data.records);
+    },
+  },
+
+  async created() {
+    const res = await requestArticleApi({
+      page: this.currentpage,
+      pagesize: this.pagesize,
+    });
+    // console.log(res);
+    (this.total = res.data.data.total), (this.listData = res.data.data.records);
   },
 };
 </script>
@@ -50,5 +98,7 @@ export default {
   color: #333;
   text-align: center;
 }
-
+.el-footer {
+  text-align: center;
+}
 </style>

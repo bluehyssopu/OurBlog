@@ -6,18 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import mavonEditor from 'mavon-editor'
 import store from '@/store'
 import 'mavon-editor/dist/css/index.css'
-
-// 添加的vue渲染markdown
-import 'github-markdown-css/github-markdown.css'
-import hljs from 'highlight.js'
-
-Vue.directive('highlight', function (el) {
-  const blocks = el.querySelectorAll('pre code')
-  blocks.forEach(block => {
-    hljs.highlightBlock(block)
-  })
-})
-
+import { OnesayApi } from "@/api";
 // use
 Vue.use(mavonEditor)
 Vue.config.productionTip = false
@@ -29,14 +18,17 @@ new Vue({
   render: h => h(App)
 }).$mount('#app')
 
-import { LoginBlogApi } from '@/api'
-async function myfun() {
-  const res = await LoginBlogApi({
-    email:'sowegn2941@163.com',
-    password:'20011031Czczcz'
-  });
-  console.log(res);   
+async function getOnesay() {
+  const res = await OnesayApi;
+  store.commit('getOnesay', res.data.data.content);
 }
-myfun()
+getOnesay()
 
-console.log(window.sessionStorage)
+
+// import { timeLineApi } from '@/api'
+// async function myfun() {
+//   const res = await timeLineApi({userId:1});
+//   console.log('----------------------------------')
+//   console.log(res.data.data);
+// }
+// myfun()

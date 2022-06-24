@@ -9,9 +9,8 @@
   margin: 0;
   padding: 0;
 }
-
 #app {
-  background: url("https://res.cloudinary.com/chengchengcheng/image/upload/v1615030006/blog/v2-bee41bb2de490aa839553cb3d0db0cfd_720w_hqkxd6.jpg");
+  background: url("https://vip2.loli.io/2022/06/22/gb9MtSfvPwcA638.jpg");
   width: 100%;
   height: 100%;
   position: fixed;
