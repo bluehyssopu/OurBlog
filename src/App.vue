@@ -10,7 +10,7 @@
   padding: 0;
 }
 #app {
-  background: url("https://vip2.loli.io/2022/06/22/gb9MtSfvPwcA638.jpg");
+  background: url("https://res.cloudinary.com/chengchengcheng/image/upload/v1655904591/blog/r_zv1nok.png");
   width: 100%;
   height: 100%;
   position: fixed;

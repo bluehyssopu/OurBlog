@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-aside width="200px">
-        <aside-item></aside-item>
+        <aside-item :total="this.$store.state.total" :imgId="this.$store.state.imgId"></aside-item>
       </el-aside>
       <el-main>
         <div class="search">

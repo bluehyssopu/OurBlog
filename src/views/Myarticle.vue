@@ -2,7 +2,7 @@
   <div class="container">
     <el-container>
       <el-aside width="200px">
-        <aside-item :total="total"></aside-item>
+        <aside-item :total="this.$store.state.total" :imgId="this.$store.state.imgId"></aside-item>
       </el-aside>
 
       <el-container>
@@ -19,7 +19,7 @@
             :current-page="currentpage"
             :page-size="pagesize"
             layout="total, prev, pager, next, jumper"
-            :total="total"
+            :total="this.$store.state.total"
           >
           </el-pagination
         ></el-footer>
@@ -40,7 +40,6 @@ export default {
     return {
       pagesize: 1,
       currentpage: 1,
-      total: 5,
       listData: [],
     };
   },
@@ -55,22 +54,22 @@ export default {
       this.currentpage = val;
       const res = await requestArticleApi({
         page: this.currentpage,
-        pagesize: this.pagesize,
+        pageSize: this.pagesize,
         userId: this.$store.state.userId,
       });
       // console.log(res);
-      (this.total = res.data.data.total),
-        (this.listData = res.data.data.records);
+      this.listData = res.data.data.records;
     },
   },
 
   async created() {
     const res = await requestArticleApi({
       page: this.currentpage,
-      pagesize: this.pagesize,
+      pageSize: this.pagesize,
+      userId: this.$store.state.userId,
     });
     // console.log(res);
-    (this.total = res.data.data.total), (this.listData = res.data.data.records);
+    this.listData = res.data.data.records;
   },
 };
 </script>

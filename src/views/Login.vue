@@ -55,12 +55,15 @@
           <el-form-item prop="password" v-if="register == 1">
             <el-input
               :type="pwdType"
-              v-model="loginForm.password"
+              v-model="loginForm.repassword"
               name="password"
               auto-complete="on"
               placeholder="password"
-              @keyup.enter.native="handleLogin"
-            />
+              @input="check"
+            >
+            <template slot="suffix">
+                <p>{{hint}}</p>
+            </template></el-input>
           </el-form-item>
 
           <!-- 登录按钮 -->
@@ -99,7 +102,7 @@
 
 <script>
 import { LoginBlogApi } from "@/api";
-
+import { registerApi } from "@/api";
 export default {
   name: "BlogLogin",
 
@@ -108,10 +111,12 @@ export default {
       activeIndex: "1",
       login: this.$store.state.logined,
       register: 0,
+      hint:'',
 
       loginForm: {
         username: "admin",
         password: "",
+        repassword:""
       },
       loginRules: {
         username: [{ required: true, trigger: "blur" }],
@@ -127,12 +132,15 @@ export default {
       const res = await LoginBlogApi(JSON.stringify(this.loginForm));
       if (res.data.code == 1) {
         this.$store.commit("changelogin", 1);
-        this.$store.commit("changeUserId", this.loginForm.username);
+        this.$store.commit("changeUserId", res.data.data.id);
+        this.$store.commit('changeImgId',res.data.data.icon)
+        localStorage.setItem("userInfo",JSON.stringify(res.data.data))
         this.$router.push("/home");
-        console.log(res)
+        // console.log(res)
+        // console.log('------------------')
+        // console.log(JSON.parse(localStorage.getItem("userInfo")));
       } else {
-        console.log(this.showmessage)
-        this.$alert('账号不存在，请注册', '提示', {
+        this.$alert(res.data.msg, '提示', {
           confirmButtonText: '确定',
         });
 
@@ -140,14 +148,15 @@ export default {
     },
 
     async handleRegister() {
-      const res = await LoginBlogApi(JSON.stringify(this.loginForm));
+      const res = await registerApi(JSON.stringify({username:this.loginForm.username,password:this.loginForm.password}));
       if (res.data.code == 1) {
         this.$alert('注册成功，请登录', '提示', {
           confirmButtonText: '确定',
         });
         this.$router.push("/login");
       } else {
-        this.$alert('网络繁忙，请重试', '提示', {
+        console.log(res);
+        this.$alert(res.data.msg, '提示', {
           confirmButtonText: '确定',
         });
 
@@ -159,7 +168,19 @@ export default {
     selectregister(){
       this.register = 1;
     },
+    check(){
+      if(this.loginForm.password !== this.loginForm.repassword){
+        this.hint = '密码不匹配'
+      }
+      else{
+        this.hint = ''
+      }
+    }
 
+  },
+
+  async destroyed() {
+    
   },
 };
 </script>

@@ -20,6 +20,7 @@ new Vue({
 
 async function getOnesay() {
   const res = await OnesayApi;
+  // console.log(res)
   store.commit('getOnesay', res.data.data.content);
 }
 getOnesay()

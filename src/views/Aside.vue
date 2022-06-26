@@ -4,8 +4,11 @@
     <!-- 个人信息展示 -->
     <div class="container" style="box-shadow: 0 2px 5px rgb(0 0 0 / 30%)">
       <div class="show">
-        <img src="../assets/logo.png" alt="author" />
-        <p style="margin: 20px">{{onesay}}</p>
+        <el-avatar
+          :src="imgurl"
+          :size="100"
+        ></el-avatar>
+        <p style="margin: 20px">{{this.$store.state.onesay}}</p>
       </div>
 
       <div class="link">
@@ -15,7 +18,7 @@
       </div>
 
       <div class="sum">
-        <p style="font-weight: bold">{{this.total}}</p>
+        <p style="font-weight: bold">{{total}}</p>
         <p>文章</p>
       </div>
     </div>
@@ -26,11 +29,13 @@
 
 <script>
 import NoticeItem from "@/components/Notice";
+import { loadApi } from "@/api";
+
 export default {
   name: "BlogAside",
   data() {
     return {
-      onesay: ''
+      imgurl:'',
     };
   },
 
@@ -38,12 +43,16 @@ export default {
     NoticeItem,
   },
 
-  created(){
-    this.onesay = this.$store.state.onesay
+  props:['total','imgId'],
+
+  async created() {
+    console.log(this.imgId);
+    const res = await loadApi({ name: this.imgId});
+    console.log(res);
+    const src = window.URL.createObjectURL(res.data);
+    console.log(src);
+    this.imgurl = src;
   },
-
-  props:['total']
-
 };
 </script>
 
@@ -55,7 +64,7 @@ export default {
 .container {
   margin-top: 0%;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 8px; 
 }
 .show {
   padding: 8% 5% 0% 5%;

@@ -3,7 +3,7 @@
   <div>
     <el-container>
       <el-aside width="200px">
-        <aside-item></aside-item>
+        <aside-item :total="this.$store.state.total" :imgId="this.$store.state.imgId"></aside-item>
       </el-aside>
       <el-main>
         <el-tree
@@ -12,7 +12,6 @@
           node-key="id"
           :props="defaultProps"
           highlight-current
-          :filter-node-method="filterNode"
           ref="tree"
           @node-click="handleNodeClick"
         >
@@ -28,68 +27,13 @@
 
 <script>
 import AsideItem from "@/views/Aside.vue";
+import { classifyApi } from "@/api";
 export default {
   name: "BlogClassify",
 
   data() {
     return {
-      data: [
-        {
-          label: "一级 1",
-          children: [
-            {
-              label: "二级 1-1",
-              children: [
-                {
-                  label: "三级 1-1-1",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          label: "一级 2",
-          children: [
-            {
-              label: "二级 2-1",
-              children: [
-                {
-                  label: "三级 2-1-1",
-                },
-              ],
-            },
-            {
-              label: "二级 2-2",
-              children: [
-                {
-                  label: "三级 2-2-1",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          label: "一级 3",
-          children: [
-            {
-              label: "二级 3-1",
-              children: [
-                {
-                  label: "三级 3-1-1",
-                },
-              ],
-            },
-            {
-              label: "二级 3-2",
-              children: [
-                {
-                  label: "三级 3-2-1",
-                },
-              ],
-            },
-          ],
-        },
-      ],
+      data: [],
       defaultProps: {
         children: "children",
         label: "label",
@@ -98,16 +42,49 @@ export default {
   },
   methods: {
     handleNodeClick(data) {
-      console.log(data);
+      if (data.isleaf != null) {
+        // console.log("---");
+        // console.log(data)
+        this.$router.push({
+          name: "article",
+          params: {
+            mdData: data.mdData,
+            create: data.create,
+            update: data.update,
+            title: data.title,
+            author: data.author,
+          },
+        });
+      }
+    },
+    toTree(arr) {
+      for (let i of arr) {
+        let child = [];
+        for (let j of i.articleList) {
+          child.push({ label: j.name, isleaf: 1, mdData: j.content,
+            create: j.createTime,
+            update: j.updateTime,
+            title: j.name,
+            author: j.userId })
+        }
+        this.data.push({ label: i.name, children: child });
+      }
     },
   },
   components: {
     AsideItem,
   },
+
+  async created() {
+    const res = await classifyApi();
+    // console.log(res);
+    this.toTree([...res.data.data]);
+    // console.log('121321412421')
+  },
 };
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 .el-aside {
   margin-top: 3%;
   color: #333;
@@ -124,17 +101,17 @@ export default {
   color: #333;
   text-align: center;
   border-radius: 8px;
-  box-shadow: 0 3px 8px 6px rgba(7,17,27,0.05)
+  box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
 }
-/deep/.el-icon-caret-right:before {
+.el-icon-caret-right:before {
   display: none;
 }
-/deep/.el-tree-node__content {
+.el-tree-node__content {
   height: 36px;
   border-radius: 8px;
   padding-left: 36px;
 }
-/deep/.el-icon-s-promotion:before {
+.el-icon-s-promotion:before {
   margin-right: 2em;
   color: #49b1f5;
 }

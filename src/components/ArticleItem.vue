@@ -5,10 +5,11 @@
       alt=""
     />
     <div class="message">
-      <p class="title">{{artdata.name}}</p>
-      <p class="article">{{artdata.content}}
-      </p>
-      <el-button type="primary" plain @click.stop="sendData">阅读全文</el-button>
+      <p class="title">{{ artdata.name }}</p>
+      <p class="article">{{ artdata.content }}</p>
+      <el-button type="primary" plain @click.stop="sendData"
+        >阅读全文</el-button
+      >
     </div>
   </div>
 </template>
@@ -17,16 +18,24 @@
 export default {
   name: "BlogArticleItem",
   data() {
-    return {
-      
-    };
+    return {};
   },
-  props:['artdata'],
+  props: ["artdata"],
 
-  methods:{
-    sendData(){
-      this.$router.push({path:'/article',query:{mdData:this.artdata.content}});
-    }
+  methods: {
+    sendData() {
+      this.$router.push({
+        name:'article',
+        params: {
+          mdData: this.artdata.content,
+          create: this.artdata.createTime,
+          update: this.artdata.updateTime,
+          title: this.artdata.name,
+          author: this.artdata.userId
+        },
+      });
+      // console.log(this.artdata);
+    },
   },
 };
 </script>
@@ -35,11 +44,10 @@ export default {
 .container {
   border-radius: 8px;
   position: relative;
-  background-color: #FFF;
+  background-color: #fff;
   height: 15rem;
   margin-bottom: 2%;
-  /* 2. 新增样式 */
-  box-shadow: 0 3px 8px 6px rgba(7,17,27,0.05)
+  box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
 }
 img {
   width: 40%;
@@ -51,10 +59,9 @@ img {
   left: 40%;
   width: 60%;
   height: 100%;
-  /* 1. 新增样式 */
-  overflow: hidden;
 }
 .title {
+  overflow: hidden;
   display: inline-block;
   margin-top: 3%;
   font-size: 2rem;

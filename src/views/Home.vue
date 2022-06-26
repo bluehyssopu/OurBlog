@@ -2,7 +2,7 @@
   <div class="container">
     <el-container>
       <el-aside width="200px">
-        <aside-item :total="total"></aside-item>
+        <aside-item :total="this.total" :imgId="this.$store.state.imgId"></aside-item>
       </el-aside>
 
       <el-container>
@@ -19,7 +19,7 @@
             :current-page="currentpage"
             :page-size="pagesize"
             layout="total, prev, pager, next, jumper"
-            :total="total"
+            :total="this.total"
           >
           </el-pagination
         ></el-footer>
@@ -40,7 +40,7 @@ export default {
     return {
       pagesize: 1,
       currentpage: 1,
-      total: "",
+      total: 0,
       listData: [],
     };
   },
@@ -55,29 +55,37 @@ export default {
       this.currentpage = val;
       const res = await requestArticleApi({
         page: this.currentpage,
-        pagesize: this.pagesize,
+        pageSize: this.pagesize,
       });
-      console.log(res);
       (this.total = Number(res.data.data.total)),
         (this.listData = res.data.data.records);
     },
   },
 
   async created() {
-    const res = await requestArticleApi(
-      JSON.stringify({
+    if (this.$store.state.logined == 0) {
+      const res = await requestArticleApi({
         page: this.currentpage,
-        pagesize: this.pagesize,
-      })
-    );
-    console.log(res);
-    (this.total = Number(res.data.data.total)),
-      (this.listData = res.data.data.records);
+        pageSize: this.pagesize,
+      });
+      (this.total = Number(res.data.data.total)),
+        (this.listData = res.data.data.records);
+    } else {
+      const res = await requestArticleApi({
+        page: this.currentpage,
+        pageSize: this.pagesize,
+        userId: this.$store.state.userId,
+      });
+      (this.total = Number(res.data.data.total)),
+        (this.listData = res.data.data.records),
+        this.$store.commit("changeTotal", this.total);
+      localStorage.setItem("total", this.total);
+    }
   },
 };
 </script>
 
-<style lang="less" scoped>
+<style scoped>
 .container {
   overflow: auto;
   display: flex;
@@ -103,8 +111,8 @@ export default {
 .el-footer {
   text-align: center;
 }
-/deep/.el-pager li,
-/deep/.el-pagination button {
+.el-pager li,
+.el-pagination button {
   background-color: #fff;
   border-radius: 8px;
   width: 2.5em;
@@ -114,14 +122,14 @@ export default {
   box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
 }
 
-/deep/.el-pager li:hover,
-/deep/.el-pagination button:hover {
+.el-pager li:hover,
+.el-pagination button:hover {
   background-color: rgb(111, 111, 238);
   color: #fff;
   transition: all 0.5s;
 }
 
-/deep/.el-pagination span {
+.el-pagination span {
   width: 2.5em;
   height: 2.5em;
   margin: 10px;

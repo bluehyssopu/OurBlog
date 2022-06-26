@@ -2,11 +2,11 @@
   <div class="container">
     <el-container>
       <el-aside width="200px">
-        <aside-item></aside-item>
+        <aside-item :total="this.$store.state.total" :imgId="this.$store.state.imgId"></aside-item>
       </el-aside>
       <el-container>
         <el-main>
-          <list-item></list-item>
+          <list-item v-for="item in userlist" :key="item.id" :userlist="item"></list-item>
         </el-main>
       </el-container>
     </el-container>
@@ -17,13 +17,27 @@
 
 import AsideItem from "@/views/Aside.vue";
 import ListItem from "@/components/Personlist.vue"
+import { followApi } from "@/api";
+
+
 export default {
   name: "BlogFollow",
-
+  data() {
+    return {
+      userlist: [],
+    };
+  },
   components: {
     AsideItem,
     ListItem
   },
+
+  async created(){
+    const res = await followApi();
+    this.userlist = res.data.data;
+    console.log(this.userlist);
+
+  }
 
 };
 </script>

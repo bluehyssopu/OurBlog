@@ -5,9 +5,19 @@
         <aside-item></aside-item>
       </el-aside>
       <el-main style="height: 100%">
-        <div class="container_edit" style="text-align: left; word-wrap: break-word">
+        <div
+          class="container_edit"
+          style="text-align: left; word-wrap: break-word"
+        >
+          <div class="person">
+            <p style="font-size: 2rem;font-weight:bold">{{title}}</p>
+            <p>作者:{{author}}</p>
+            <div class="person_bottom">
+              <p>更新于:{{update}}</p>
+              <p>发表于:{{create}}</p>
+            </div>
+          </div>
           <mavon-editor
-            class="md"
             :value="mdData"
             :subfield="false"
             :defaultOpen="'preview'"
@@ -30,17 +40,25 @@ export default {
 
   data() {
     return {
-      mdData: '',
+      mdData:"",
+      title:"title",
+      author:"author",
+      update:"update",
+      create:"created"
     };
   },
   components: {
     AsideItem,
   },
-  async created(){
-    if(this.$route.query.mdData != null){
-      this.mdData = this.$route.query.mdData
+  async created() {
+    if (this.$route.params.mdData != null) {
+      this.mdData = this.$route.params.mdData;
+      this.title = this.$route.params.title;
+      this.update = this.$route.params.update.substring(0,10);
+      this.create = this.$route.params.create.substring(0,10);
+      this.author = this.$route.params.author;
     }
-  }
+  },
 };
 </script>
 
@@ -83,6 +101,7 @@ export default {
   min-width: 200px;
   max-width: 980px;
   margin: 0 auto;
+  margin-top: 1rem;
   padding: 45px;
   /* box-shadow: rgb(0 0 0 / 10%) 0px 2px 12px 0px; */
 }
@@ -91,5 +110,31 @@ export default {
   .markdown-body {
     padding: 15px;
   }
+}
+
+.person {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 1px 1px 1px rgba(10, 16, 20, 0.12);
+  margin: 0% auto;
+  width: inherit;
+  min-width: 200px;
+  max-width: 980px;
+  height: 8rem;
+  border-radius: 8px;
+  background-color: #fff;
+}
+.person p {
+  text-align: center;
+  padding-top: 0.8rem;
+  
+}
+.person_bottom {
+  margin: 0rem 12rem;
+  display: flex;
+  justify-content: space-between;
+}
+.person_bottom p{
+  padding-top: 0rem;
 }
 </style>
