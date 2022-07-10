@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <el-container style="height: 100%">
-      <el-aside width="200px">
+      <el-aside width="240px">
         <aside-item :userId="this.$route.params.author"></aside-item>
       </el-aside>
       <el-main style="height: 100%">

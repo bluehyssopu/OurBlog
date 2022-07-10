@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container>
-      <el-aside width="200px">
+      <el-aside width="240px">
         <aside-item :userId="this.$store.state.userId"></aside-item>
       </el-aside>
       <el-main>
