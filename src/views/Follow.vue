@@ -2,7 +2,7 @@
   <div class="container">
     <el-container>
       <el-aside width="200px">
-        <aside-item :total="this.$store.state.total" :imgId="this.$store.state.imgId"></aside-item>
+        <aside-item :userId="this.$store.state.userId"></aside-item>
       </el-aside>
       <el-container>
         <el-main>
@@ -35,8 +35,6 @@ export default {
   async created(){
     const res = await followApi();
     this.userlist = res.data.data;
-    console.log(this.userlist);
-
   }
 
 };

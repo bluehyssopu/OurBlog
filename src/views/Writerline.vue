@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-aside width="200px">
-        <aside-item :total="this.$store.state.total" :imgId="this.$store.state.imgId"></aside-item>
+        <aside-item :userId="this.$store.state.userId"></aside-item>
       </el-aside>
       <el-main>
         <el-timeline>
@@ -57,6 +57,8 @@ export default {
           update: artdata.updateTime,
           title: artdata.name,
           author: artdata.userId,
+          username: artdata.username,
+          artid:artdata.id
         },
       });
     },

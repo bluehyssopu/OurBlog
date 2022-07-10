@@ -1,10 +1,9 @@
 <template>
   <div class="container">
     <el-container>
-      <el-aside width="200px">
-        <aside-item :total="this.total" :imgId="this.$store.state.imgId"></aside-item>
+      <el-aside width="240px">
+        <aside-item :userId="this.$store.state.userId"></aside-item>
       </el-aside>
-
       <el-container>
         <el-main>
           <article-item
@@ -38,7 +37,7 @@ export default {
 
   data() {
     return {
-      pagesize: 1,
+      pagesize: 5,
       currentpage: 1,
       total: 0,
       listData: [],
@@ -63,29 +62,17 @@ export default {
   },
 
   async created() {
-    if (this.$store.state.logined == 0) {
-      const res = await requestArticleApi({
-        page: this.currentpage,
-        pageSize: this.pagesize,
-      });
-      (this.total = Number(res.data.data.total)),
-        (this.listData = res.data.data.records);
-    } else {
-      const res = await requestArticleApi({
-        page: this.currentpage,
-        pageSize: this.pagesize,
-        userId: this.$store.state.userId,
-      });
-      (this.total = Number(res.data.data.total)),
-        (this.listData = res.data.data.records),
-        this.$store.commit("changeTotal", this.total);
-      localStorage.setItem("total", this.total);
-    }
+    const res = await requestArticleApi({
+      page: this.currentpage,
+      pageSize: this.pagesize,
+    });
+    console.log(res);
+    (this.total = Number(res.data.data.total)),
+      (this.listData = res.data.data.records);
   },
 };
 </script>
-
-<style scoped>
+<style lang="scss" scoped>
 .container {
   overflow: auto;
   display: flex;
@@ -111,8 +98,8 @@ export default {
 .el-footer {
   text-align: center;
 }
-.el-pager li,
-.el-pagination button {
+/deep/.el-pager li,
+/deep/.el-pagination button {
   background-color: #fff;
   border-radius: 8px;
   width: 2.5em;
@@ -122,14 +109,14 @@ export default {
   box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
 }
 
-.el-pager li:hover,
-.el-pagination button:hover {
+/deep/.el-pager li:hover,
+/deep/.el-pagination button:hover {
   background-color: rgb(111, 111, 238);
   color: #fff;
   transition: all 0.5s;
 }
 
-.el-pagination span {
+/deep/.el-pagination span {
   width: 2.5em;
   height: 2.5em;
   margin: 10px;

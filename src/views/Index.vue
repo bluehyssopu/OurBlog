@@ -12,7 +12,7 @@
       <el-menu-item index="classify">分类</el-menu-item>
       <el-submenu index="">
         <template slot="title">文章</template>
-        <el-menu-item index="edit">文章编辑</el-menu-item>
+        <el-menu-item index="edit">创建文章</el-menu-item>
         <el-menu-item index="myarticle">我的文章</el-menu-item>
       </el-submenu>
       <el-menu-item index="search">搜索</el-menu-item>
@@ -58,6 +58,7 @@ export default {
         if (res.data.code == 1) {
           this.$store.commit("logout");
           localStorage.removeItem("userInfo");
+          localStorage.removeItem("total");
           this.$router.push("/login");
         }
       });

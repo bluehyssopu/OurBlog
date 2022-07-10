@@ -3,6 +3,21 @@
     <router-view></router-view>
   </div>
 </template>
+<script>
+export default {
+  name: "BlogApp",
+
+  data() {
+    return {};
+  },
+
+  created() {
+    if (this.$router.path != "/home") {
+      this.$router.replace("/home");
+    }
+  },
+};
+</script>
 
 <style>
 * {
@@ -17,4 +32,14 @@
   background-size: 100% 100%;
   overflow-y: scroll;
 }
+/*全局滚动条样式*/
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #67aedd;
+  border-radius: 3px;
+}
+/*全局滚动条样式结束*/
 </style>

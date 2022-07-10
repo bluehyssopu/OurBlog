@@ -2,7 +2,7 @@
   <div class="container">
     <el-container>
       <el-aside width="200px">
-        <aside-item :total="this.$store.state.total" :imgId="this.$store.state.imgId"></aside-item>
+        <aside-item :userId="this.$store.state.userId"></aside-item>
       </el-aside>
 
       <el-container>
@@ -11,6 +11,7 @@
             v-for="item in listData"
             :artdata="item"
             :key="item.id"
+            @delete="changeList"
           ></article-item>
         </el-main>
         <el-footer
@@ -38,9 +39,10 @@ export default {
 
   data() {
     return {
-      pagesize: 1,
+      pagesize: 5,
       currentpage: 1,
       listData: [],
+      timer: null,
     };
   },
 
@@ -60,6 +62,20 @@ export default {
       // console.log(res);
       this.listData = res.data.data.records;
     },
+    changeList() {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(async () => {
+        const res = await requestArticleApi({
+          page: this.currentpage,
+          pageSize: this.pagesize,
+          userId: this.$store.state.userId,
+        });
+        console.log(res);
+        this.listData = res.data.data.records;
+        this.$store.commit('changeTotal', Number(res.data.data.total));
+        this.$forceUpdate();
+      }, 2000);
+    },
   },
 
   async created() {
@@ -68,7 +84,6 @@ export default {
       pageSize: this.pagesize,
       userId: this.$store.state.userId,
     });
-    // console.log(res);
     this.listData = res.data.data.records;
   },
 };

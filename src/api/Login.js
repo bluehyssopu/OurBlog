@@ -1,4 +1,4 @@
-import request from "@/untils/request.js";
+import request from "@/utils/request.js";
 export const LoginBlog = (params) => request({
   url:'/user/login',
   data:params,

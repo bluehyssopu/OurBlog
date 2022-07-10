@@ -3,7 +3,7 @@
   <div>
     <el-container>
       <el-aside width="200px">
-        <aside-item :total="this.$store.state.total" :imgId="this.$store.state.imgId"></aside-item>
+        <aside-item :userId="this.$store.state.userId"></aside-item>
       </el-aside>
       <el-main>
         <el-tree
@@ -53,6 +53,8 @@ export default {
             update: data.update,
             title: data.title,
             author: data.author,
+            username: data.username,
+            artid:data.artid
           },
         });
       }
@@ -65,7 +67,9 @@ export default {
             create: j.createTime,
             update: j.updateTime,
             title: j.name,
-            author: j.userId })
+            author: j.userId,
+            username: j.username,
+            artid:j.id })
         }
         this.data.push({ label: i.name, children: child });
       }
@@ -84,7 +88,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .el-aside {
   margin-top: 3%;
   color: #333;
@@ -103,15 +107,15 @@ export default {
   border-radius: 8px;
   box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
 }
-.el-icon-caret-right:before {
+/deep/.el-icon-caret-right:before {
   display: none;
 }
-.el-tree-node__content {
+/deep/.el-tree-node__content {
   height: 36px;
   border-radius: 8px;
   padding-left: 36px;
 }
-.el-icon-s-promotion:before {
+/deep/.el-icon-s-promotion:before {
   margin-right: 2em;
   color: #49b1f5;
 }

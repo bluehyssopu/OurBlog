@@ -2,7 +2,7 @@
   <div class="container">
     <el-container>
       <el-aside width="200px">
-        <aside-item :total="this.total" :imgId="this.$route.params.imgId"></aside-item>
+        <aside-item :userId="this.$route.params.userId"></aside-item>
       </el-aside>
 
       <el-container>
@@ -38,7 +38,7 @@ export default {
 
   data() {
     return {
-      pagesize: 1,
+      pagesize: 5,
       currentpage: 1,
       listData: [],
       total:0
