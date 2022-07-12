@@ -107,17 +107,22 @@ export default {
   margin: 6px;
   /* 3. 新增样式 */
   box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);
+  transition: all 0.3s ease-in-out;
+}
+
+/deep/.el-button {
+  transition: all 0.3s ease-in-out;
 }
 
 /deep/.el-pager li:hover,
+/deep/.el-button:hover,
 /deep/.el-pagination button:hover {
   background-color: rgb(111, 111, 238);
   color: #fff;
-  transition: all 0.5s;
 }
 
 /deep/.el-pagination span {
-  width: 2.5em;
+  width: 4.5em;
   height: 2.5em;
   margin: 10px;
 }

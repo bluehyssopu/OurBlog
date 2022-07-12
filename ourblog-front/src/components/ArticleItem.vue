@@ -199,10 +199,10 @@ export default {
 img {
   width: 100%;
   height: 100%;
+  transition: all 0.5s ease-in-out;
 }
 img:hover {
-  transform: scale(1.2);
-  transition: all 0.5s ease-in;
+  transform: scale(1.1);
 }
 .message {
   position: absolute;

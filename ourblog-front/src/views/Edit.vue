@@ -2,6 +2,7 @@
   <div>
     <el-container>
       <el-main>
+        <!-- 添加文章标签 -->
         <el-tag
           :key="tag"
           v-for="tag in dynamicTags"
@@ -19,15 +20,17 @@
           size="small"
           @keyup.enter.native="handleInputConfirm"
           @blur="handleInputConfirm"
+          style="border-radius: 8px;"
         >
         </el-input>
         <el-button v-else class="button-new-tag" size="small" @click="showInput"
           >添加文章标签</el-button
         >
 
+        <!-- 文章title 分类 和 提交按钮 -->
         <div>
           <el-input placeholder="请输入文章题目" v-model="title"> </el-input>
-          <el-select v-model="value" placeholder="请选择文章分类">
+          <el-select v-model="value" placeholder="请选择文章分类" style="margin-left: 1rem">
             <el-option
               v-for="item in options"
               :key="item.index"
@@ -36,6 +39,13 @@
             >
             </el-option>
           </el-select>
+          <el-button
+            v-if="edited == 0"
+            @click="submit"
+            style="margin-left: 1rem;border-radius: 8px;"
+          >
+            提交文章
+          </el-button>
         </div>
 
         <mavon-editor
@@ -44,15 +54,7 @@
           style="min-height: 45vw; position: static"
         />
         <el-button
-          v-if="edited == 0"
-          @click="submit"
-          round
-          style="width: 50%; margin-top: 1rem"
-        >
-          提交文章
-        </el-button>
-        <el-button
-          v-else
+          v-if="edited != 0"
           @click="change"
           round
           style="width: 50%; margin-top: 1rem"
@@ -135,7 +137,6 @@ export default {
           message: res.data.msg,
           type: "success",
         });
-
       } else {
         this.$message.error(res.data.msg);
       }
@@ -179,6 +180,7 @@ export default {
   line-height: 30px;
   padding-top: 0;
   padding-bottom: 0;
+  border-radius: 8px;
 }
 
 .input-new-tag {

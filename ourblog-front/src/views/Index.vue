@@ -7,16 +7,16 @@
       mode="horizontal"
       router
     >
-      <el-menu-item index="home">首页</el-menu-item>
-      <el-menu-item index="timeline">时间轴</el-menu-item>
-      <el-menu-item index="classify">分类</el-menu-item>
+      <el-menu-item index="home"><i class="el-icon-s-home"></i>首页</el-menu-item>
+      <el-menu-item index="timeline"> <i class="el-icon-date"></i> 时间轴</el-menu-item>
+      <el-menu-item index="classify"> <i class="el-icon-folder"></i> 分类</el-menu-item>
       <el-submenu index="">
-        <template slot="title">文章</template>
-        <el-menu-item index="edit">创建文章</el-menu-item>
-        <el-menu-item index="myarticle">我的文章</el-menu-item>
+        <template slot="title"> <i class="el-icon-document"></i> 文章</template>
+        <el-menu-item index="edit"> <i class="el-icon-plus"></i> 创建文章</el-menu-item>
+        <el-menu-item index="myarticle"> <i class="el-icon-s-claim"></i> 我的文章</el-menu-item>
       </el-submenu>
-      <el-menu-item index="search">搜索</el-menu-item>
-      <el-menu-item index="follow">关注</el-menu-item>
+      <el-menu-item index="search"><i class="el-icon-search"></i>搜索</el-menu-item>
+      <el-menu-item index="follow"> <i class="el-icon-star-on"></i> 关注</el-menu-item>
       <el-button round v-if="this.$store.state.logined === 0" @click="jump"
         >登录/注册</el-button
       >
