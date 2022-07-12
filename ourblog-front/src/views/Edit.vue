@@ -23,9 +23,7 @@
           style="border-radius: 8px;"
         >
         </el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput"
-          >添加文章标签</el-button
-        >
+        <el-button v-else class="button-new-tag" size="small" @click="showInput">添加文章标签</el-button>
 
         <!-- 文章title 分类 和 提交按钮 -->
         <div>
